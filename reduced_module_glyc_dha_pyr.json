@@ -1,0 +1,328 @@
+{
+  "reactions": {
+    "GLYCtex": {
+      "stoich": {
+        "glyc_e": -1.0,
+        "glyc_p": 1.0
+      },
+      "bounds": [
+        -1000.0,
+        1000.0
+      ],
+      "dg_std": 0.0,
+      "dg_error": 0.0,
+      "big_m": 100.0,
+      "dynamic_dg_substrate": "glyc"
+    },
+    "GLYCtpp": {
+      "stoich": {
+        "glyc_c": -1.0,
+        "glyc_p": 1.0
+      },
+      "bounds": [
+        -1000.0,
+        1000.0
+      ],
+      "dg_std": null,
+      "dg_error": 0.0,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "DHAtex": {
+      "stoich": {
+        "dha_e": -1.0,
+        "dha_p": 1.0
+      },
+      "bounds": [
+        -1000.0,
+        1000.0
+      ],
+      "dg_std": 0.0,
+      "dg_error": 0.0,
+      "big_m": 100.0,
+      "dynamic_dg_substrate": "dha"
+    },
+    "DHAtpp": {
+      "stoich": {
+        "dha_c": -1.0,
+        "dha_p": 1.0
+      },
+      "bounds": [
+        -1000.0,
+        1000.0
+      ],
+      "dg_std": null,
+      "dg_error": 0.0,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "PYRtex": {
+      "stoich": {
+        "pyr_e": -1.0,
+        "pyr_p": 1.0
+      },
+      "bounds": [
+        -1000.0,
+        1000.0
+      ],
+      "dg_std": 0.0,
+      "dg_error": 0.0,
+      "big_m": 100.0,
+      "dynamic_dg_substrate": "pyr"
+    },
+    "PYRt2pp": {
+      "stoich": {
+        "h_p": -1.0,
+        "pyr_p": -1.0,
+        "h_c": 1.0,
+        "pyr_c": 1.0
+      },
+      "bounds": [
+        0.0,
+        1000.0
+      ],
+      "dg_std": null,
+      "dg_error": 0.0,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "GLYK": {
+      "stoich": {
+        "atp_c": -1.0,
+        "glyc_c": -1.0,
+        "adp_c": 1.0,
+        "glyc3p_c": 1.0,
+        "h_c": 1.0
+      },
+      "bounds": [
+        0.0,
+        1000.0
+      ],
+      "dg_std": -15.9,
+      "dg_error": 2.08,
+      "big_m": 100.0,
+      "dynamic_dg_substrate": null
+    },
+    "G3PD6": {
+      "stoich": {
+        "glyc3p_c": -1.0,
+        "mqn8_c": -1.0,
+        "dhap_c": 1.0,
+        "mql8_c": 1.0
+      },
+      "bounds": [
+        0.0,
+        1000.0
+      ],
+      "dg_std": null,
+      "dg_error": 4.93,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "DHAPT": {
+      "stoich": {
+        "dha_c": -1.0,
+        "pep_c": -1.0,
+        "dhap_c": 1.0,
+        "pyr_c": 1.0
+      },
+      "bounds": [
+        0.0,
+        1000.0
+      ],
+      "dg_std": -39.59,
+      "dg_error": 2.21,
+      "big_m": 100.0,
+      "dynamic_dg_substrate": null
+    },
+    "TPI": {
+      "stoich": {
+        "dhap_c": -1.0,
+        "g3p_c": 1.0
+      },
+      "bounds": [
+        -1000.0,
+        1000.0
+      ],
+      "dg_std": null,
+      "dg_error": 0.55,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "GAPD": {
+      "stoich": {
+        "g3p_c": -1.0,
+        "nad_c": -1.0,
+        "pi_c": -1.0,
+        "13dpg_c": 1.0,
+        "h_c": 1.0,
+        "nadh_c": 1.0
+      },
+      "bounds": [
+        -1000.0,
+        1000.0
+      ],
+      "dg_std": null,
+      "dg_error": 0.41,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "PGK": {
+      "stoich": {
+        "3pg_c": -1.0,
+        "atp_c": -1.0,
+        "13dpg_c": 1.0,
+        "adp_c": 1.0
+      },
+      "bounds": [
+        -1000.0,
+        1000.0
+      ],
+      "dg_std": null,
+      "dg_error": 0.44,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "PGM": {
+      "stoich": {
+        "2pg_c": -1.0,
+        "3pg_c": 1.0
+      },
+      "bounds": [
+        -1000.0,
+        1000.0
+      ],
+      "dg_std": null,
+      "dg_error": 0.36,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "ENO": {
+      "stoich": {
+        "2pg_c": -1.0,
+        "h2o_c": 1.0,
+        "pep_c": 1.0
+      },
+      "bounds": [
+        -1000.0,
+        1000.0
+      ],
+      "dg_std": null,
+      "dg_error": 0.3,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "PYK": {
+      "stoich": {
+        "adp_c": -1.0,
+        "h_c": -1.0,
+        "pep_c": -1.0,
+        "atp_c": 1.0,
+        "pyr_c": 1.0
+      },
+      "bounds": [
+        0.0,
+        1000.0
+      ],
+      "dg_std": -25.45,
+      "dg_error": 0.42,
+      "big_m": 100.0,
+      "dynamic_dg_substrate": null
+    },
+    "DM_pyr_c": {
+      "stoich": {
+        "pyr_c": -1
+      },
+      "bounds": [
+        0,
+        1000
+      ],
+      "dg_std": null,
+      "dg_error": null,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "DM_atp_c": {
+      "stoich": {
+        "atp_c": -1,
+        "adp_c": 1,
+        "pi_c": 1,
+        "h_c": 1
+      },
+      "bounds": [
+        0,
+        1000
+      ],
+      "dg_std": null,
+      "dg_error": null,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "DM_nadh_c": {
+      "stoich": {
+        "nadh_c": -1,
+        "nad_c": 1,
+        "h_c": 1
+      },
+      "bounds": [
+        0,
+        1000
+      ],
+      "dg_std": null,
+      "dg_error": null,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    },
+    "DM_mql8_c": {
+      "stoich": {
+        "mql8_c": -1,
+        "mqn8_c": 1
+      },
+      "bounds": [
+        0,
+        1000
+      ],
+      "dg_std": null,
+      "dg_error": null,
+      "big_m": null,
+      "dynamic_dg_substrate": null
+    }
+  },
+  "internal_metabolites": [
+    "13dpg_c",
+    "2pg_c",
+    "3pg_c",
+    "adp_c",
+    "atp_c",
+    "dha_c",
+    "dha_p",
+    "dhap_c",
+    "g3p_c",
+    "glyc3p_c",
+    "glyc_c",
+    "glyc_p",
+    "mql8_c",
+    "mqn8_c",
+    "nad_c",
+    "nadh_c",
+    "pep_c",
+    "pyr_c",
+    "pyr_p"
+  ],
+  "unbalanced_metabolites": [
+    "h2o_c",
+    "h_c",
+    "h_p",
+    "pi_c"
+  ],
+  "external_dynamic_metabolites": [
+    "dha_e",
+    "glyc_e",
+    "pyr_e"
+  ],
+  "carbon_source_tex_reaction": {
+    "glyc": "GLYCtex",
+    "dha": "DHAtex",
+    "pyr": "PYRtex"
+  }
+}
