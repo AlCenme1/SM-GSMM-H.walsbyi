@@ -1,43 +1,6 @@
 """
 milp_thermokinetic_sim.py
 ==========================
-Simulación termo-cinética del módulo reducido glicerol/DHA/piruvato de
-H. walsbyi, resolviendo en CADA paso de tiempo un problema LP/MILP real
-sobre la matriz estequiométrica S del módulo (build_reduced_module.py),
-con factibilidad termodinámica Big-M (ecs. del problema P1 del paper,
-Sec. 2.4.2), en vez de la sigmoide ad hoc de thermokinetic_sim.py.
-
-ALCANCE ("intermedio", confirmado con el usuario):
-  - Matriz S real del módulo reducido -> SÍ
-  - Restricción Big-M de factibilidad termodinámica -> SÍ (con ΔG'°
-    real de eQuilibrator + muestreo de incertidumbre por réplica MC)
-  - Fuerza electroquímica de Na+ / potencial de membrana Δψ -> NO
-  - Actividades químicas vía Pitzer -> NO
-  - Solo fuentes de carbono glicerol/DHA/piruvato -> SÍ (sin ruta spED)
-
-SIMPLIFICACIONES DOCUMENTADAS (respecto al problema P1 completo):
-  1. Reacciones de transporte periplasma<->citoplasma (GLYCtpp, DHAtpp,
-     PYRt2pp) y las casi-en-equilibrio (TPI, GAPD, PGK, PGM, ENO) se
-     tratan como termodinámicamente irrestrictas: su ΔG'° estándar no es
-     un predictor confiable de su sentido fisiológico sin seguimiento de
-     concentraciones intracelulares reales (ver build_reduced_module.py
-     para la justificación completa).
-  2. El paso de captación real (*tex) SÍ tiene una restricción Big-M
-     dinámica: ΔG'_tex,t = ΔG'°_tex + RT·ln(C_intracelular_asumida /
-     C_extracelular,t) -- el mismo mecanismo conceptual que la
-     "mu_k = C[t]/C0" del ODE original, ahora alimentando una
-     restricción dura en vez de una sigmoide suave.
-  3. El objetivo maximizado en cada paso es un proxy de "ATP-equivalente"
-     (v_DM_atp_c + W_PYR·v_DM_pyr_c), NO la reacción de biomasa completa
-     del GSMM (fuera de alcance del módulo reducido). W_PYR representa el
-     rendimiento de ATP-equivalentes de la oxidación completa de
-     piruvato vía PDH+TCA+cadena respiratoria (no modelada aquí
-     explícitamente) -- valor de texto estándar (~12.5 ATP/piruvato),
-     AJUSTABLE, y necesario para que el piruvato "cuente" en el
-     objetivo (de lo contrario cruza el módulo sin generar ATP interno
-     y el optimizador lo ignora).
-  4. Sin matriz S completa del GSMM ni actividades de Pitzer: esto sigue
-     siendo un módulo REDUCIDO, no el problema P1 íntegro.
 """
 
 import json
@@ -59,11 +22,11 @@ SUBSTRATES = ["glyc", "dha", "pyr"]
 R_GAS = 8.314e-3  # kJ/(mol K)
 T = 310.15        # K
 RT = R_GAS * T
-VARPI = 0.5        # kJ/mol, margen de disipación estricto (paper: varpi>0)
-C_IN_ASSUMED = 0.01  # mM, pool intracelular bajo asumido para el paso *tex
-W_PYR = 12.5        # ATP-equivalentes por piruvato exportado (PDH+TCA+ETC, fuera de alcance) -- AJUSTABLE
+VARPI = 0.5        # kJ/mol, 
+C_IN_ASSUMED = 0.01  # mM, 
+W_PYR = 12.5        # ATP
 
-# --- mismos priors cinéticos y de heterogeneidad que thermokinetic_sim.py ---
+
 KM_MEAN = {"glyc": 1.4, "dha": 0.35, "pyr": 0.6}
 VMAX_MEAN = {"glyc": 164.0, "dha": 120.0, "pyr": 140.0}
 KIN_CV = 0.25
@@ -78,9 +41,7 @@ DT = 0.5
 T_HORIZON = 48.0
 X0 = 0.001
 
-# reacciones con ΔG'° fijo (no dependiente de tex) sujetas a Big-M:
-# se muestrea su incertidumbre (dg_error de eQuilibrator) una vez por
-# réplica MC, igual que DELTA_G0_SD hacía en el modelo original
+
 _FIXED_DG_RIDS = [
     rid for rid, rd in REACTIONS.items()
     if rd["dg_std"] is not None and rd.get("dynamic_dg_substrate") is None
@@ -88,10 +49,7 @@ _FIXED_DG_RIDS = [
 
 
 def sample_params(rng, active_sources):
-    """Muestrea un set de parámetros de incertidumbre por réplica MC:
-    ΔG'° perturbado (para reacciones con dato fijo de eQuilibrator), y
-    KM/Vmax cinéticos (mismos priors que el modelo original), más el
-    factor de heterogeneidad fisiológica eta."""
+    
     dg_sampled = {}
     for rid in _FIXED_DG_RIDS:
         rd = REACTIONS[rid]
@@ -116,10 +74,7 @@ def sample_params(rng, active_sources):
 
 
 def solve_milp_step(active_sources, C_now, dg_sampled, KM, Vmax, eta):
-    """Resuelve el LP/MILP de un paso de tiempo: maximiza el proxy de
-    ATP-equivalentes sujeto a S·v=0 (módulo reducido) y factibilidad
-    termodinámica Big-M. Devuelve (uptake_flux_por_sustrato, atp_eq_total,
-    status)."""
+    
     prob = pulp.LpProblem("step", pulp.LpMaximize)
     v = {}
     for rid, rd in REACTIONS.items():
